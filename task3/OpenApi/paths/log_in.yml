@@ -1,0 +1,47 @@
+post:
+  description: Вход в систему
+  tags:
+    - Аутентификация пользователя
+  parameters:
+    - $ref: common/i18n_param.yml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              description: Адрес электронной почты пользователя
+              type: string
+              format: email
+            password:
+              description: Пароль пользователя
+              type: string
+              format: password
+          example:
+            email: Ivanov_mail@example.com
+            password: Password@123
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                description: JWT токен для авторизации
+                type: string
+                format: byte
+            example:
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwMjYyMjI1LCJpYXQiOjE3MDg1MzQyMjUsImp0aSI6IjcwMmVkYTM1Yjg2MTRlMDk5NTlmNjFlN2UyM2I4NjhkIiwidXNlcl9pZCI6Mn0.2OdisZ1mlXPYQJ947y12x85bp5Ms9m2PrBMFk2-00As
+    '400':
+      description: Ошибка
+      headers:
+        $ref: "common/i18n_header.yml"
+      content:
+        application/json:
+          schema:
+            $ref: "common/error.yml"
+    '401':
+      description: Ошибка аутентификации
